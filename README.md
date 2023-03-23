@@ -1,0 +1,3 @@
+SeeSay:
+
+SeeSay is an online social media platform in which a user uploads a photo and their followers are able to pick the caption. It works by displaying the most liked comment as the caption underneath the photo. Let your friends create funny or informative captions to your photos. The site will contain a page with your posts and a feed that displays the last uploaded photo by any of your followers. To avoid the problem of random people accessing the picture and commenting on it, accounts will be private. Therefore only your circle of friends can see  and interact with your posts. You will only be allowed to post up to once a day. This is because social media can be addictive and this is to avoid the overuse of the application. 

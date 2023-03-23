@@ -1,0 +1,59 @@
+{
+"User":[
+{
+"id": 1,
+"Name": "Toby Krystman",
+"email": "tkrystman@gmail.com",
+"number of posts":7,
+"bio": "love football #SEAGULLS"
+
+},
+{
+    "id": 2,
+    "Name": "Elinor Oliver",
+    "email": "eoliver@gmail.com",
+    "number of posts":17,
+    "bio": "Art + Music = Life"
+    
+}
+],
+
+
+    "Posts":[
+    {
+    "UserId": 1,
+    "PostId": 1,
+    "Image": "DayOutAtThePark.png",
+    "number of comments":7,
+    "Most Liked comment": "The Boys Looking Hapopy."
+    
+    },
+    {
+        "UserId": 2,
+    "PostId": 5,
+    "Image": "DrinksWithTheGirlies.png",
+    "number of comments":45,
+    "Most Liked comment": "What A Night!!!"
+        
+    }
+    ],
+
+    "Comment":[
+        {
+        "PostId": 1,
+        "Comment": "The Boys Looking Hapopy.",
+        "Image": "DayOutAtThePark.png",
+        "number of likes":70
+        
+        
+        },
+        {
+            "PostId": 5,
+            "Comment": "What A Night!!!",
+            "Image": "DrinksWithTheGirlies.png",
+            "number of likes":401
+            
+        }
+        ]
+    }
+
