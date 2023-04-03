@@ -40,9 +40,11 @@
         return false
     }
 
-exports.newUser=newUser;
-exports.getUsers=getUsers;
-exports.findUser=findUser;
-exports.checkPassword=checkPassword;
-exports.setLoggedIn=setLoggedIn;
-exports.isLoggedIn=isLoggedIn;
+    module.exports={
+        newUser,
+        getUsers,
+        findUser,
+        checkPassword,
+        setLoggedIn,
+        isLoggedIn
+    }

@@ -1,7 +1,7 @@
 
 body{
   background: no-repeat center/50% url('/Images/Background.png');
- 
+  background-color: 	#f5f1eb;
 
 }
 .layout {
@@ -79,7 +79,7 @@ body{
       }
       
       .posts{
-        font-size:30px; font-weight:300; color:#222; letter-spacing:1px;
+        font-size:30px; font-weight:300; color:#222; 
         text-transform: uppercase;
         text-align:center;
         list-style: none;
@@ -89,4 +89,33 @@ body{
       
       }
 
+      .uls {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        align-items: baseline;
+         position: fixed;
+  bottom: 0;
+  width: 100%;
+      }
+      
+      .lis {
+        float: left;
+        
+      }
+      
+      .lis a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+      
+      /* Change the link color to #111 (black) on hover */
+      .lis a:hover {
+        background-color: #111;
+      }
       

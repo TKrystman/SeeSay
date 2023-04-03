@@ -1,4 +1,4 @@
-console.log("Simple Posting App")
+/*console.log("Simple Posting App")
 
 //Data structures
 const user={
@@ -159,4 +159,4 @@ function handleDataFromServer(data){
     console.log(data)
     recentPosts=data.posts
     updateRecentPosts()
-}
+}*/
