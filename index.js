@@ -9,12 +9,12 @@ app.use(express.static('public'))
 app.use(express.json())
 
 require('dotenv').config();
-const mongoDBPassword=process.env.MYMONGODBPASSWORD
+const mongoDBPassword=process.env.MYMONGOPASSWORD
 const sessionSecret=process.env.MYSESSIONSECRET
 
 //allows us to process post info in urls
 app.use(express.urlencoded({extended: false}));
-mongoose.connect(`mongodb+srv://CCO6005-00:${mongoDBPassword}@cluster0.lpfnqqx.mongodb.net/SeeSay?retryWrites=true&w=majority`)
+mongoose.connect(`mongodb+srv://CCO6005-00:${mongoDBPassword}@cluster0.lpfnqqx.mongodb.net/seesay?retryWrites=true&w=majority`)
 const path = require('path');
 
 //importing our own node module
