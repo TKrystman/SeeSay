@@ -2,12 +2,14 @@ const mongoose=require('mongoose');
 const { Schema, model } = mongoose;
 
 const postSchema = new Schema({
+    PostId: Number,
     postedBy: String,
     message: String,
     likes: Number,
     time: Date,
     imagePath: String,
-    tags: [String],
+    MostLikedComment: String,
+    NumberOfComments:Number,
     comments: [{
         user: String,
         message: String,
