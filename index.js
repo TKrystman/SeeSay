@@ -2,7 +2,7 @@ const express=require('express')
 const app = express()
 app.listen(3000, ()=> console.log('listening at port 3000'))
 const mongoose=require('mongoose');
-
+const multer=require('multer');
 //serve unspecified static pages from our public dir
 app.use(express.static('public'))
 //make express middleware for json available
@@ -18,8 +18,8 @@ mongoose.connect(`mongodb+srv://CCO6005-00:${mongoDBPassword}@cluster0.lpfnqqx.m
 const path = require('path');
 
 //importing our own node module
-const users=require('./users.js')
-
+const users=require('./models/users')
+const upload = multer({ dest: './public/uploads/' })
 //consts to hold expiry times in ms
 const threeMins = 1000 * 60 * 3;
 const oneHour = 1000 * 60 * 60;
@@ -56,7 +56,7 @@ function checkLoggedIn(request, response, nextAction){
 
 //controller for the main app view, depends on user logged in state
 app.get('/app', checkLoggedIn, (request, response)=>{
-    response.redirect('./application.html')
+    response.redirect('./viewposts.html')
 })
 
 
@@ -70,17 +70,18 @@ app.post('/logout', (request, response)=>{
 })
 
 //controller for login
-app.post('/login', (request, response)=>{
+app.post('/login', async (request, response)=>{
     console.log(request.body)
     let userData=request.body
     console.log(userData)
-    if(users.findUser(userData.username)){
+    
+    if(await users.findUser(userData.username)){
         console.log('user found')
-        if(users.checkPassword(userData.username, userData.password)){
+        if(await users.checkPassword(userData.username, userData.password)){
             console.log('password matches')
             request.session.userid=userData.username
-            users.setLoggedIn(userData.username, true)
-            response.redirect('./application.html')
+            await users.setLoggedIn(userData.username, true)
+            response.redirect('/viewposts.html')
         } else {
             console.log('password wrong')
             response.redirect('./logout.html')
@@ -91,11 +92,43 @@ app.post('/login', (request, response)=>{
 
 
 
-app.post('/newpost',(request, response) =>{
+app.post('/newpost', upload.single('myImage'), async (request, response) =>{
+    console.log(request.file)
+    let filename=null
+    if(request.file && request.file.filename){ //check that a file was passes with a valid name
+        filename='uploads/'+request.file.filename
+    }
+    await postData.addNewPost(request.session.userid, request.body, filename)
+    response.redirect('/viewposts.html')
+})
+
+//controller for handling a post being liked
+app.post('/like', async (request, response)=>{
+    //function to deal with a like button being pressed on a post
+    likedPostID=request.body.likedPostID
+    likedByUser=request.session.userid
+    await postData.likePost(likedPostID, likedByUser)
+    // console.log(likedByUser+" liked "+likedPostID)
+    response.json(
+        {posts:await postData.getPosts(5)}
+    )
+})
+
+app.post('/comment', async (request, response)=>{
+    //function to deal with a like button being pressed on a post
+    let commentedPostID=request.body.postid
+    let comment=request.body.message
+    let commentByUser=request.session.userid
+    await postData.commentOnPost(commentedPostID, commentByUser, comment)
+    // response.json({post: await postData.getPost(commentedPostID)})
+    response.redirect('/viewposts.html')
+})
+
+app.post('/getonepost', async (request, response) =>{
+    // console.log(request.file)
+    let postid=request.body.post
     console.log(request.body)
-    console.log(request.session.userid)
-    postData.addNewPost(request.session.userid, request.body)
-    response.redirect('./postsuccessful.html')
+    response.json({post: await postData.getPost(request.body.post)})
 })
 
 app.get('/getposts', async (request, response)=>{
@@ -106,11 +139,11 @@ app.get('/getposts', async (request, response)=>{
 })
 
 //controller for registering a new user
-app.post('/register', (request, response)=>{
+app.post('/register', async (request, response)=>{
     console.log(request.body)
     let userData=request.body
     // console.log(userData.username)
-    if(users.findUser(userData.username)){
+    if(await users.findUser(userData.username)){
         console.log('user exists')
         response.json({
             status: 'failed',

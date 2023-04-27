@@ -12,8 +12,8 @@ const postSchema = new Schema({
     NumberOfComments:Number,
     comments: [{
         user: String,
-        message: String,
-        likes: Number
+        messagec: String,
+        likesc: Number
     }]
 });
 
@@ -87,4 +87,4 @@ async function commentOnPost(commentedPostID, commentByUser, comment){
 }
 
 // module.exports = Post;
-module.exports = {addNewPost, getPosts, getPost, likePost, commentOnPost};
+module.exports = {addNewPost, getPosts, getPost, likePost, commentOnPost, };
