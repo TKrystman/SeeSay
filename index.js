@@ -42,6 +42,8 @@ app.use(sessions({
     resave: false 
 }));
 
+app.set('view engine', 'ejs');
+
 //test that user is logged in with a valid session
 function checkLoggedIn(request, response, nextAction){
     if(request.session){
@@ -56,16 +58,16 @@ function checkLoggedIn(request, response, nextAction){
 
 //controller for the main app view, depends on user logged in state
 app.get('/app', checkLoggedIn, (request, response)=>{
-    response.redirect('./viewposts.html')
+    //response.redirect('./register.html')
+    response.sendFile(path.resolve(__dirname,'Views/pages/viewposts.html'))
 })
 
-
 //controller for logout
-app.post('/logout', (request, response)=>{
+app.post('/logout', async (request, response)=>{
     
-    users.setLoggedIn(request.session.userid,false)
+    await users.setLoggedIn(request.session.userid,false)
     request.session.destroy()
-    console.log(users.getUsers())
+    await console.log(users.getUsers())
     response.redirect('./logout.html')
 })
 
@@ -81,16 +83,21 @@ app.post('/login', async (request, response)=>{
             console.log('password matches')
             request.session.userid=userData.username
             await users.setLoggedIn(userData.username, true)
-            response.redirect('/viewposts.html')
+            response.redirect('/app')
         } else {
             console.log('password wrong')
             response.redirect('./logout.html')
         }
+    }else {
+        console.log('no such user')
+        response.redirect('./logout.html')
     }
     console.log(users.getUsers())
 })
 
-
+app.get('/newpostpage', checkLoggedIn, (request, response)=>{
+    response.render('pages/newpost');
+})
 
 app.post('/newpost', upload.single('myImage'), async (request, response) =>{
     console.log(request.file)
@@ -101,6 +108,14 @@ app.post('/newpost', upload.single('myImage'), async (request, response) =>{
     await postData.addNewPost(request.session.userid, request.body, filename)
     response.redirect('/viewposts.html')
 })
+
+// async/await version of /getposts controller using Mongo
+app.get('/getposts',async (request, response)=>{
+    response.json(
+        {posts:await postData.getPosts(5)}
+    )
+})
+
 
 //controller for handling a post being liked
 app.post('/like', async (request, response)=>{
@@ -121,7 +136,7 @@ app.post('/comment', async (request, response)=>{
     let commentByUser=request.session.userid
     await postData.commentOnPost(commentedPostID, commentByUser, comment)
     // response.json({post: await postData.getPost(commentedPostID)})
-    response.redirect('/viewposts.html')
+    response.redirect('Views/pages/viewposts.html')
 })
 
 app.post('/getonepost', async (request, response) =>{
