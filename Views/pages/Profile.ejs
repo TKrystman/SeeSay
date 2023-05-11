@@ -13,28 +13,35 @@
         <div class="header">
         <h2 class="seven">Profile</h2>     
         </div>
-   <div>
-<Text> Name </Text>
+   <div class="posts">
+<img src="<%= user.profilePic %>">  
+        <h2> <%= user.username %> </h2>
+        <h2> <%= user.bio %> </h2>
 <Text> PROFILE PICTURE </Text>
 <Text> Bio </Text>
 <Text> Posts </Text>
+<form action="/changeProf" class="page" enctype="multipart/form-data" method="POST">
+
+      <input type="file" name="ImageFile" accept="image/*" />
+
+      <input type="text" id="Bio" name="Bio"><br>
+      <input type="submit" class="button" value="Update">
+    </form>
    </div>
+
+  
+</div>
+
         <div class="posts">
-        
- 
            <ul class="uls">
           <li class="lis"><a href="newpost.html">Upload</a></li>  
           <li class="lis"><a href="login.html">Login</a></li>  
           <li class="lis"><a href="logout.html">Logout</a></li>  
-          <li class="lis"><a href="viewposts.html">Posts</a></li>  
+          <li class="lis"><a href="/app">Posts</a></li>  
         </ul>
       </div>
       
-      <div>
-        <ul class="posts" id="username"></ul>
-    </div>
-
-    <script src="../users.js"></script>
+     
 </section>
 </body>
 

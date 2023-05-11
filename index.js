@@ -106,7 +106,16 @@ app.post('/newpost', upload.single('myImage'), async (request, response) =>{
         filename='uploads/'+request.file.filename
     }
     await postData.addNewPost(request.session.userid, request.body, filename)
-    response.redirect('/viewposts.html')
+    response.redirect('/app')
+})
+app.post('/changeProf', upload.single('ImageFile'), async (request, response) =>{
+    console.log(request.file)
+    let filename=null
+    if(request.file && request.file.filename){ //check that a file was passes with a valid name
+        filename='uploads/'+request.file.filename
+    }
+    await users.changeProfile(request.session.userid, request.body, filename)
+ response.redirect('/Profile')
 })
 
 // async/await version of /getposts controller using Mongo
@@ -136,7 +145,7 @@ app.post('/comment', async (request, response)=>{
     let commentByUser=request.session.userid
     await postData.commentOnPost(commentedPostID, commentByUser, comment)
     // response.json({post: await postData.getPost(commentedPostID)})
-    response.redirect('Views/pages/viewposts.html')
+    response.redirect('/app')
 })
 
 app.post('/getonepost', async (request, response) =>{
@@ -170,3 +179,10 @@ app.post('/register', async (request, response)=>{
     }
     console.log(users.getUsers())
 })
+
+app.get('/Profile', checkLoggedIn, async (request, response) =>{
+    var userData = await users.findUser(request.session.userid)
+    response.render('pages/Profile', {
+     user: userData,
+    });
+});

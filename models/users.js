@@ -4,7 +4,9 @@ const { Schema, model } = mongoose;
 const userSchema = new Schema({
     username: String,
     password: String,
-    loggedin: Boolean
+    loggedin: Boolean,
+    profilePic: String,
+    bio: String,
 });
 
 const User = model('User', userSchema);
@@ -36,9 +38,9 @@ const User = model('User', userSchema);
         return data;
     }
 
-    // function findUser(username){
-    //     return users.find(user=>user.username==username)
-    // }
+   
+
+
 
     async function findUser(userToFind){
         let user=null
@@ -76,11 +78,29 @@ const User = model('User', userSchema);
         }
         return false
     }
-    module.exports = {
-newUser,
-getUsers,
-findUser,
-checkPassword,
-setLoggedIn,
-isLoggedIn
-};
+    async function changeProfile(user, data, ImageFile){
+        console.log(ImageFile);
+        await User.findOneAndUpdate(
+          
+             {username: user}, 
+             
+             {bio: data.Bio},
+            ).exec()
+            await User.findOneAndUpdate(
+                {username: user}, 
+                {profilePic: ImageFile},
+                
+            ).exec()
+
+     }
+
+    
+    module.exports={
+        newUser,
+        getUsers,
+        findUser,
+        checkPassword,
+        setLoggedIn,
+        isLoggedIn,
+        changeProfile,
+    }
