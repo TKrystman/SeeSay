@@ -51,7 +51,7 @@ function checkLoggedIn(request, response, nextAction){
             nextAction()
         } else {
             request.session.destroy()
-            return response.redirect('./logout.html')
+            return response.redirect('./login.html')
         }
     }
 }
@@ -68,7 +68,7 @@ app.post('/logout', async (request, response)=>{
     await users.setLoggedIn(request.session.userid,false)
     request.session.destroy()
     await console.log(users.getUsers())
-    response.redirect('./logout.html')
+    response.redirect('./login.html')
 })
 
 //controller for login
@@ -86,11 +86,11 @@ app.post('/login', async (request, response)=>{
             response.redirect('/app')
         } else {
             console.log('password wrong')
-            response.redirect('./logout.html')
+            response.redirect('./login.html')
         }
     }else {
         console.log('no such user')
-        response.redirect('./logout.html')
+        response.redirect('./login.html')
     }
     console.log(users.getUsers())
 })

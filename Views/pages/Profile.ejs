@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="profileStyle.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,35 +13,49 @@
         <div class="header">
         <h2 class="seven">Profile</h2>     
         </div>
+        <div class="container">
    <div class="posts">
-<img src="<%= user.profilePic %>">  
+   
+<img class="profilePic" src="<%= user.profilePic %>">  
         <h2> <%= user.username %> </h2>
-        <h2> <%= user.bio %> </h2>
-<Text> PROFILE PICTURE </Text>
-<Text> Bio </Text>
-<Text> Posts </Text>
-<form action="/changeProf" class="page" enctype="multipart/form-data" method="POST">
+        <h2 class="BIO"> <%= user.bio %> </h2>
 
+        <form action="/changeProf" class="page" enctype="multipart/form-data" method="POST">
+<Text class="OPD"> Update Profile Pic </Text>
       <input type="file" name="ImageFile" accept="image/*" />
 
-      <input type="text" id="Bio" name="Bio"><br>
+      <input type="text" id="Bio" name="Bio"> <Text class="OPD"> Update Bio </Text><br>
       <input type="submit" class="button" value="Update">
     </form>
-   </div>
-
-  
 </div>
+    <div>
+        <ul class="list-container" id="recent-posts"></ul>
+    </div>
+
+ 
+
+   </div>
+</div>
+  
 
         <div class="posts">
            <ul class="uls">
           <li class="lis"><a href="newpost.html">Upload</a></li>  
-          <li class="lis"><a href="login.html">Login</a></li>  
+           <li class="lis"> <a href="friends.html">Friends</a></li>  
+           <li class="lis"> <img src='../Images/Background.png' style="    
+         width: 110px;
+        height: 110px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        "> </li>    
           <li class="lis"><a href="logout.html">Logout</a></li>  
           <li class="lis"><a href="/app">Posts</a></li>  
         </ul>
       </div>
       
-     
+        <script src="scripts/viewposts.js"></script>
 </section>
 </body>
 

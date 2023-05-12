@@ -17,12 +17,16 @@ function handleServerData(){
         recentPostsList.appendChild(li)
     })
 }
-
+var img = document.createElement('img');
 function renderPost(post){
     // console.log(post._id.toString(), post.likes);
     let li=document.createElement('li')
     let liText=document.createElement('p')
-    liText.textContent=`${post.message} (by ${post.postedBy}) [likes:${post.likes}]`
+    img.src = "../Images/Thumbsup.png"; 
+    liText.textContent = `${post.message} (${post.postedBy}) [${img}] [${post.likes}]`;
+ 
+    li.appendChild(liText);
+
     //create a 'like' button
     let button=document.createElement('button')
     button.textContent='like'

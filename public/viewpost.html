@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -13,20 +14,12 @@
     </style>
 </head>
 <body>
-    <h2>Comment on Post</h2>
-    <nav>
-        <a href="login.html">Login</a>
-        <a href="logout.html">Logout</a>
-        <a href="register.html">Register</a>
-        <a href="app">Application</a>
-    </nav>
-
-    <div>
+    <h2 class='title'>MOST LIKED COMMENT WILL APPEAR HERE</h2>
+    
         <div id="post">
             <img id="post-img" src="" alt="">
-            <p><span>message:</span><span id="post-message"></span></p>
         </div>
-        <form id="comment-form" action="/comment" method="POST">
+        <form class="commForm" id="comment-form" action="/comment" method="POST">
             <label>Comment</label>
             <input type="text" id="message" name="message"><br>
             <input type="submit" value="Post Comment">
@@ -35,7 +28,12 @@
             <ul id="post-comments"></ul>
         </div>
     </div>
+    <div class="posts">
+        <ul class="uls">
+       <li class="lis"> <a href="/app">Back</a></li>  
+       </li> 
 
+    <div>
     <script>
         //get js pointers to the html elements
         let postImage=document.querySelector('#post-img')
