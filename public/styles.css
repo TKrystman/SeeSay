@@ -166,14 +166,21 @@ body{
     }
 
     .commForm{
-      position: fixed;
-      top: 100px;
-      right: 600px;
+      position: absolute;
+      top: 70px;
+      right: 200px;
       background-color: #f1f1f1;
       padding: 20px;
       border-radius: 10px;
     }
-
+    .commForm2{
+      position: absolute;
+      top: 70px;
+      right: 580px;
+      background-color: #f1f1f1;
+      padding: 20px;
+      border-radius: 10px;
+    }
 
 .commForm label {
   font-size: 18px;

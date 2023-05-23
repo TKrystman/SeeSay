@@ -14,29 +14,34 @@
     </style>
 </head>
 <body>
-    <h2 class='title'>MOST LIKED COMMENT WILL APPEAR HERE</h2>
+    <div class="title" >
+        <ul id="recent-posts"></ul>
+    </div>
     
         <div id="post">
-            <img id="post-img" src="" alt="">
+        <img id="post-img" src="" alt="">
+        <p><span id="post-message"></span></p>
         </div>
         <form class="commForm" id="comment-form" action="/comment" method="POST">
             <label>Comment</label>
             <input type="text" id="message" name="message"><br>
             <input type="submit" value="Post Comment">
         </form>
-        <div id="comments">
+        <div class="commForm2"  id="comments">
             <ul id="post-comments"></ul>
         </div>
     </div>
+    
     <div class="posts">
         <ul class="uls">
        <li class="lis"> <a href="/app">Back</a></li>  
        </li> 
 
     <div>
+     
     <script>
-        //get js pointers to the html elements
-        let postImage=document.querySelector('#post-img')
+       //get js pointers to the html elements
+       let postImage=document.querySelector('#post-img')
         let postMessage=document.querySelector('#post-message')
         let postComments=document.querySelector('#post-comments')
 
@@ -65,7 +70,6 @@
         fetch('/getonepost',options)
             .then(response=>response.json())
             .then(serverResponse=>renderPost(serverResponse))
-        
 
         //render the retrieved post data in html
         function renderPost(postData){
@@ -94,7 +98,43 @@
                     postComments.appendChild(commentsUL)
                 }
         }
+    function sortCommentsByLikes() {
+        const list = document.getElementById('post-comments');
+      const comments = Array.from(list.getElementsByTagName('ul'));
+
+      // Sort comments based on number of likes
+      comments.sort((a, b) => {
+        const likesA = parseInt(a.getAttribute(comment.likes));
+        const likesB = parseInt(b.getAttribute(comment.likes));
+        return likesB - likesA;
+      });
+
+    // Remove existing comments from the list
+    while (list.firstChild) {
+      list.removeChild(list.firstChild);
+    }
+
+    // Append sorted comments to the list
+    comments.forEach((commentsUL) => {
+        postComments.appendChild(commentsUL)
+    });
+  }
+
+  function renderTopPost(post){
+    let comments=post.comments
+   
+    if(comments.length > 0){
+
+        renderComments(li, [comments[0]]) //only render first comment
         
+    }
+
+        return li;
+      
+
+   
+
+}
     </script>
     
 </body>

@@ -18,6 +18,7 @@ function handleServerData(){
     })
 }
 var img = document.createElement('img');
+
 function renderPost(post){
     // console.log(post._id.toString(), post.likes);
     let li=document.createElement('li')
@@ -49,11 +50,21 @@ function renderPost(post){
     li.appendChild(viewButton)
     // grab the comments list
     let comments=post.comments
-    if(comments.length>0){
-        renderComments(li, comments)
+   
+    if(comments.length > 0){
+
+        renderComments(li, [comments[0]]) //only render first comment
+        
     }
-    return li
+
+        return li;
+      
+
+   
+
 }
+
+
 
 function renderImage(li, post){
     if(post.imagePath){
@@ -71,6 +82,7 @@ function renderImage(li, post){
 
 function renderComments(li, comments){
     //add a list of comments
+
     let commentsUL=document.createElement('ul')
             comments.forEach(function(comment){
                 let commentLi=document.createElement('li')
@@ -79,8 +91,13 @@ function renderComments(li, comments){
                 //add like button and code to handle like later
                 commentLi.appendChild(commentLiText)
                 commentsUL.appendChild(commentLi)
+                
             })
+           
             li.appendChild(commentsUL)
+            
+            
+            
 }
 
 function processLike(event){

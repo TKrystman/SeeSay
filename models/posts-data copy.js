@@ -12,8 +12,8 @@ const postSchema = new Schema({
     NumberOfComments:Number,
     comments: [{
         user: String,
-        messagec: String,
-        likesc: Number
+        message: String,
+        likes: Number
     }]
 });
 
@@ -74,6 +74,7 @@ async function likePost(likedPostID, likedByUser){
 
 
 async function commentOnPost(commentedPostID, commentByUser, comment){
+    
     // await Post.findByIdAndUpdate(likedPostID,{$inc: { likes: 1 }})
     let found
     let newComment={
@@ -81,9 +82,14 @@ async function commentOnPost(commentedPostID, commentByUser, comment){
         message: comment,
         likes: 0
     }
-    await Post.findByIdAndUpdate(commentedPostID,{$push: {comments: newComment}}).exec()
-        .then(foundData=>found=foundData)
-    // console.log(found)
+    try { //means program will still run if any errors occur
+        await Post.findByIdAndUpdate(commentedPostID, { $push: { comments: newComment } }).exec();
+      
+        // console.log(found);
+      } catch (error) {
+        // Handle any errors that occurred during the process
+        console.error(error);
+      }
 }
 
 // module.exports = Post;
