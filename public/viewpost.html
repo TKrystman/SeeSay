@@ -15,9 +15,9 @@
 </head>
 <body>
     <div class="title" >
-        <ul id="recent-posts"></ul>
+        <ul  class="list-container" id="/post-comments"></ul>
     </div>
-    
+ 
         <div id="post">
         <img id="post-img" src="" alt="">
         <p><span id="post-message"></span></p>
@@ -38,13 +38,15 @@
        </li> 
 
     <div>
-     
+     <!-- <script src="scripts/viewposts.js"></script> -->
     <script>
-       //get js pointers to the html elements
+        
+    //    get js pointers to the html elements
        let postImage=document.querySelector('#post-img')
         let postMessage=document.querySelector('#post-message')
         let postComments=document.querySelector('#post-comments')
-
+     
+let recentPostsList=document.querySelector('#recent-posts')
         //get the postid from the url query string
         const queryString = window.location.search
         const urlParams = new URLSearchParams(queryString);
@@ -57,8 +59,7 @@
         hiddenField.setAttribute("name", "postid");
         hiddenField.setAttribute("value", selectedPost);
         form.appendChild(hiddenField);
-  
-        
+       
         // Send comment form data as a post request with fetch
         let options={
                 method: 'POST',
@@ -85,56 +86,76 @@
             postMessage.innerText=postData.post.message
             let comments=postData.post.comments
                 if(comments.length>0){
+                  
                     //add a list of comments
                     let commentsUL=document.createElement('ul')
+                    console.log(comments);
+                    comments.sort(function(a,b){return b.likes-a.likes});
+                    console.log(comments);
                     comments.forEach(function(comment){
+
+                        
                         let commentLi=document.createElement('li')
                         let commentLiText=document.createElement('p')
                         commentLiText.textContent=`${comment.message} (by ${comment.user}) [likes:${comment.likes}]`
                         //add like button and code to handle like later
                         commentLi.appendChild(commentLiText)
                         commentsUL.appendChild(commentLi)
+                     
+                        let buttonc=document.createElement('button')
+            buttonc.textContent='like'
+            buttonc.addEventListener('click',commentLike)
+            //add a unique attribute for the like button so it knows which post it belongs to
+            
+            buttonc.setAttribute('data-comment-id',comment._id.toString())
+        
+            commentsUL.appendChild(buttonc)
+
                     })
+                  
                     postComments.appendChild(commentsUL)
                 }
-        }
-    function sortCommentsByLikes() {
-        const list = document.getElementById('post-comments');
-      const comments = Array.from(list.getElementsByTagName('ul'));
-
-      // Sort comments based on number of likes
-      comments.sort((a, b) => {
-        const likesA = parseInt(a.getAttribute(comment.likes));
-        const likesB = parseInt(b.getAttribute(comment.likes));
-        return likesB - likesA;
-      });
-
-    // Remove existing comments from the list
-    while (list.firstChild) {
-      list.removeChild(list.firstChild);
-    }
-
-    // Append sorted comments to the list
-    comments.forEach((commentsUL) => {
-        postComments.appendChild(commentsUL)
-    });
-  }
-
-  function renderTopPost(post){
-    let comments=post.comments
-   
-    if(comments.length > 0){
-
-        renderComments(li, [comments[0]]) //only render first comment
+            
+           
         
+
+        }
+
+
+       
+  
+    //liking a comment  
+    function commentLike(event){
+    let likedCommentID=event.target.getAttribute('data-comment-id');
+ 
+    let options={
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            likedCommentID:likedCommentID,
+            postID:selectedPost
+        })
     }
-
-        return li;
-      
-
-   
-
+    fetch('/comLike',options)
+        .then(response=>response.json())
+        .then(fetchedData=>{
+            recentPosts=fetchedData.posts
+            handleServerData()
+        })
 }
+
+function handleServerData(){
+    recentPostsList.innerHTML=''
+    recentPosts.forEach(function(post){
+        let li=renderPost(post)
+        recentPostsList.appendChild(li)
+    })
+}
+  
+
+      
     </script>
     
 </body>

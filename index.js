@@ -121,7 +121,7 @@ app.post('/changeProf', upload.single('ImageFile'), async (request, response) =>
 // async/await version of /getposts controller using Mongo
 app.get('/getposts',async (request, response)=>{
     response.json(
-        {posts:await postData.getPosts(5)}
+        {posts:await postData.getPosts(500)}
     )
 })
 
@@ -134,7 +134,19 @@ app.post('/like', async (request, response)=>{
     await postData.likePost(likedPostID, likedByUser)
     // console.log(likedByUser+" liked "+likedPostID)
     response.json(
-        {posts:await postData.getPosts(5)}
+        {posts:await postData.getPosts(500)}
+    )
+})
+
+//controller for comment a post being liked
+app.post('/comLike', async (request, response)=>{
+    //function to deal with a like button being pressed on a post
+    likedCommentID=request.body.likedCommentID
+    commentedPostID=request.body.postid
+    await postData.likeComment(likedCommentID, commentedPostID )
+
+    response.json(
+        {posts:await postData.getPosts(500)}
     )
 })
 
@@ -157,7 +169,7 @@ app.post('/getonepost', async (request, response) =>{
 
 app.get('/getposts', async (request, response)=>{
     response.json(
-        {posts: await postData.getPosts(5)}
+        {posts: await postData.getPosts(500)}
         
     )
 })

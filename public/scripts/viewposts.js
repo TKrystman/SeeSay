@@ -23,8 +23,18 @@ function renderPost(post){
     // console.log(post._id.toString(), post.likes);
     let li=document.createElement('li')
     let liText=document.createElement('p')
+    let comments=post.comments
+    console.log(comments);
+    comments.sort(function(a,b){return b.likes-a.likes});
+    console.log(comments);
+    if(comments.length > 0){
+
+        renderComments(li, [comments[0]]) //only render first comment
+        
+    }
+
     img.src = "../Images/Thumbsup.png"; 
-    liText.textContent = `${post.message} (${post.postedBy}) [${img}] [${post.likes}]`;
+    liText.textContent = ` (${post.postedBy})  Likes: [${post.likes}]`;
  
     li.appendChild(liText);
 
@@ -49,14 +59,7 @@ function renderPost(post){
     li.appendChild(button)
     li.appendChild(viewButton)
     // grab the comments list
-    let comments=post.comments
    
-    if(comments.length > 0){
-
-        renderComments(li, [comments[0]]) //only render first comment
-        
-    }
-
         return li;
       
 
@@ -75,7 +78,7 @@ function renderImage(li, post){
         li.appendChild(postImage)
     } else {
         let noPostImage=document.createElement('p')
-        noPostImage.textContent="alas, no image!"
+        noPostImage.textContent="no image"
         li.appendChild(noPostImage)
     }
 }
@@ -84,6 +87,7 @@ function renderComments(li, comments){
     //add a list of comments
 
     let commentsUL=document.createElement('ul')
+ 
             comments.forEach(function(comment){
                 let commentLi=document.createElement('li')
                 let commentLiText=document.createElement('p')

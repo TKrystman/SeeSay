@@ -79,17 +79,25 @@ const User = model('User', userSchema);
         return false
     }
     async function changeProfile(user, data, ImageFile){
+
         console.log(ImageFile);
+
         await User.findOneAndUpdate(
-          
              {username: user}, 
-             
              {bio: data.Bio},
             ).exec()
+
             await User.findOneAndUpdate(
                 {username: user}, 
                 {profilePic: ImageFile},
                 
+            ).
+            exec()
+
+            await User.findOneAndUpdate(
+                {username: user}, 
+                {password: data.password},
+
             ).exec()
 
      }

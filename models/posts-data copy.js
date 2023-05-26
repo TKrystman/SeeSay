@@ -67,11 +67,38 @@ async function getPost(postid){
 async function likePost(likedPostID, likedByUser){
     // await Post.findByIdAndUpdate(likedPostID,{$inc: { likes: 1 }})
     let found
+
+    
     await Post.findByIdAndUpdate(likedPostID,{$inc: {likes: 1}}).exec()
         .then(foundData=>found=foundData)
     // console.log(found)
 }
 
+async function likeComment(commentedPostID, likedPostID){
+    // await Post.findByIdAndUpdate(likedPostID,{$inc: { likes: 1 }})
+    let found
+    
+    // const itemId = 2;
+    // // const query = {
+    // //    commentedPostID._id:commentedPostID,
+    // //    likedPostID._id: likedPostID
+    // //  };
+    // Post.findOne(likedPostID).then(doc => {
+    //   comments = doc.comments.id(commentedPostID );
+      
+    //  likes["0"] =  '1';
+    //   doc.save();
+    
+    //   //sent respnse to client
+    // }).catch(err => {
+    //   console.log('err')
+    // });
+
+
+    await Post.findByIdAndUpdate(likedPostID, commentedPostID,{$inc: {likes: 1}}).exec()
+        .then(foundData=>found=foundData)
+    // console.log(found)
+}
 
 async function commentOnPost(commentedPostID, commentByUser, comment){
     
@@ -80,7 +107,7 @@ async function commentOnPost(commentedPostID, commentByUser, comment){
     let newComment={
         user: commentByUser,
         message: comment,
-        likes: 0
+        likes: 0,
     }
     try { //means program will still run if any errors occur
         await Post.findByIdAndUpdate(commentedPostID, { $push: { comments: newComment } }).exec();
@@ -93,4 +120,4 @@ async function commentOnPost(commentedPostID, commentByUser, comment){
 }
 
 // module.exports = Post;
-module.exports = {addNewPost, getPosts, getPost, likePost, commentOnPost, };
+module.exports = {addNewPost, getPosts, getPost, likePost, commentOnPost,likeComment };
