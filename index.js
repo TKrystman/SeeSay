@@ -175,6 +175,14 @@ app.get('/getposts', async (request, response)=>{
     )
 })
 
+//pulls all users for the friends request page
+app.get('/getUsers', async (request, response)=>{
+    response.json(
+     {users: await users.getUsers(500)}
+        
+    )
+})
+
 //controller for registering a new user
 app.post('/register', async (request, response)=>{
     console.log(request.body)
@@ -193,9 +201,14 @@ app.post('/register', async (request, response)=>{
     console.log(users.getUsers())
 })
 
+
+
+
+
 app.get('/Profile', checkLoggedIn, async (request, response) =>{
     var userData = await users.findUser(request.session.userid)
     response.render('pages/Profile', {
      user: userData,
     });
 });
+
