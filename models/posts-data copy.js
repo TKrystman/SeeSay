@@ -20,19 +20,27 @@ const postSchema = new Schema({
 const Post = model('MyPost', postSchema);
 
 
-function addNewPost(userID, post, imageFile){
-    let myPost={
+async function addNewPost(userID, post, imageFile) {
+
+        //checks when the user last posted 
+      const lastPost = await Post.findOne({ postedBy: userID }).sort({ time: -1 }).exec();
+  //checks for if 24 hours have elapsed since last post
+      if (lastPost && Date.now() - lastPost.time < 24 * 60 * 60 * 1000) {
+        console.log("too early"); //going to change this to show the user something
+        return;
+      }
+  //if not they can post
+      const myPost = {
         postedBy: userID,
         message: post.message,
         imagePath: imageFile,
         likes: 0,
-        time: Date.now()
-    }
-    Post.create(myPost)
-        .catch(err=>{
-            console.log('Error:'+err)
-        });
-}
+        time: Date.now(),
+      };
+  
+      await Post.create(myPost);
+    } 
+  
 
 
 //needs to be an async function so we can pause execution awaiting for data
@@ -118,6 +126,12 @@ async function commentOnPost(commentedPostID, commentByUser, comment){
         console.error(error);
       }
 }
+async function changePost(postId, updatedMessage) {
+    
+     await Post.findByIdAndUpdate(
+        postId,
+        { $set: { message: updatedMessage } }).exec();
+  }
 
-// module.exports = Post;
-module.exports = {addNewPost, getPosts, getPost, likePost, commentOnPost,likeComment };
+
+module.exports = { addNewPost, getPosts, getPost, likePost, commentOnPost, likeComment, changePost };

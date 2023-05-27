@@ -118,14 +118,15 @@ app.post('/changeProf', upload.single('ImageFile'), async (request, response) =>
  response.redirect('/Profile')
 })
 
-// async/await version of /getposts controller using Mongo
-app.get('/getposts',async (request, response)=>{
-    response.json(
-        {posts:await postData.getPosts(500)}
-    )
-})
-
-
+app.post('/changePost', async (request, response) => {
+    const postId = request.query.post;
+    const updatedMessage = request.body.message;
+    const fileName = request.body.fileName || null;
+  
+    await postData.changePost(postId, updatedMessage, fileName);
+  
+    response.redirect('/app');
+  });
 //controller for handling a post being liked
 app.post('/like', async (request, response)=>{
     //function to deal with a like button being pressed on a post

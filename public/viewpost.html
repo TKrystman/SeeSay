@@ -17,7 +17,7 @@
     <div class="title" >
         <ul  class="list-container" id="/post-comments"></ul>
     </div>
- 
+  
         <div id="post">
         <img id="post-img" src="" alt="">
         <p><span id="post-message"></span></p>
@@ -30,6 +30,11 @@
         <div class="commForm2"  id="comments">
             <ul id="post-comments"></ul>
         </div>
+        <form action="/changePost" class="page" method="POST">
+            <input type="text" id="message" name="message">
+            <Text class="OPD">Update Location</Text><br>
+            <input type="submit" class="button" value="Update">
+          </form>
     </div>
     
     <div class="posts">
