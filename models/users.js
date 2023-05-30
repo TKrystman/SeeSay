@@ -7,6 +7,13 @@ const userSchema = new Schema({
     loggedin: Boolean,
     profilePic: String,
     bio: String,
+    requests: [{
+        user: String,
+    }],
+    friends: [{
+        user: String,
+      
+    }]
 });
 
 const User = model('User', userSchema);
@@ -101,6 +108,34 @@ const User = model('User', userSchema);
             ).exec()
 
      }
+     async function sendReq(senderUsername, receiverUserId) {
+    const sender = await findUser(senderUsername);
+    const receiver = await User.findById(receiverUserId); // Find the receiver by user ID
+    console.log(senderUsername, receiverUserId);
+    if (sender && receiver) {
+        receiver.requests.push({ user: senderUsername });
+        await receiver.save();
+       
+    }
+}
+    
+    async function acceptReq(receiverUsername, senderUsername) {
+        const receiver = await findUser(receiverUsername);
+        const sender = await findUser(senderUsername);
+        if (receiver && sender) {
+          
+            receiver.requests = receiver.requests.filter(request => request.user !== senderUsername);
+    
+       
+            receiver.friends.push({ user: senderUsername });
+    
+          
+            sender.friends.push({ user: receiverUsername });
+    
+            await receiver.save();
+            await sender.save();
+        }
+    }
 
     
     module.exports={
@@ -111,4 +146,6 @@ const User = model('User', userSchema);
         setLoggedIn,
         isLoggedIn,
         changeProfile,
+        sendReq,
+        acceptReq,
     }

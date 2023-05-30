@@ -1,3 +1,5 @@
+
+
 let recentPosts=[]
 
 let recentPostsList=document.querySelector('#recent-posts')
@@ -44,13 +46,15 @@ function renderPost(post){
     button.addEventListener('click',processLike)
     //add a unique attribute for the like button so it knows which post it belongs to
     button.setAttribute('data-post-id',post._id.toString())
-
+ 
     //create a 'view and comment' button
     let viewButton=document.createElement('button')
     viewButton.textContent='view and comment'
     viewButton.addEventListener('click',processView)
     //add a unique attribute for the like button so it knows which post it belongs to
     viewButton.setAttribute('view-post-id',post._id.toString())
+
+    
     
     // show image if present
     renderImage(li, post)
@@ -58,6 +62,7 @@ function renderPost(post){
     li.appendChild(liText)
     li.appendChild(button)
     li.appendChild(viewButton)
+    
     // grab the comments list
    
         return li;
@@ -124,6 +129,8 @@ function processLike(event){
         })
 }
 
+
+ 
 // If view post button is pressed, grab its post id attribute and 
 // direct the user to the view post page with this added in 
 // url search params

@@ -15,9 +15,10 @@
 </head>
 <body>
     <div class="title" >
-        <ul  class="list-container" id="/post-comments"></ul>
+        <ul  class="list-container" id="recent-posts"></ul>
+ 
     </div>
-  
+
         <div id="post">
         <img id="post-img" src="" alt="">
         <p><span id="post-message"></span></p>
@@ -30,11 +31,19 @@
         <div class="commForm2"  id="comments">
             <ul id="post-comments"></ul>
         </div>
-        <form action="/changePost" class="page" method="POST">
-            <input type="text" id="message" name="message">
+   
+          <form action="/changePost" class="page"  method="POST">
             <Text class="OPD">Update Location</Text><br>
+            <input type="hidden" name="postid" value="6474ddea10ab0bd629bd4f9a">
+            <input type="text" name="updatedMessage" class="button">
             <input type="submit" class="button" value="Update">
           </form>
+
+      <form action="/removePost" class="page" method="POST">
+  <Text class="OPD">Delete Post</Text><br>
+  <input type="text" name="postId" placeholder="Enter Post ID" required><br> 
+  <input type="submit" class="button" value="Delete">
+</form>
     </div>
     
     <div class="posts">
@@ -113,11 +122,11 @@ let recentPostsList=document.querySelector('#recent-posts')
             //add a unique attribute for the like button so it knows which post it belongs to
             
             buttonc.setAttribute('data-comment-id',comment._id.toString())
-        
+          
             commentsUL.appendChild(buttonc)
 
                     })
-                  
+                   
                     postComments.appendChild(commentsUL)
                 }
             
@@ -128,7 +137,6 @@ let recentPostsList=document.querySelector('#recent-posts')
 
 
        
-  
     //liking a comment  
     function commentLike(event){
     let likedCommentID=event.target.getAttribute('data-comment-id');

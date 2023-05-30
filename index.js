@@ -23,7 +23,7 @@ const upload = multer({ dest: './public/uploads/' })
 //consts to hold expiry times in ms
 const threeMins = 1000 * 60 * 3;
 const oneHour = 1000 * 60 * 60;
-
+const removePost = require('./models/users');
 //use the sessions module and the cookie parser module
 const sessions = require('express-session');
 const cookieParser = require("cookie-parser");
@@ -108,6 +108,26 @@ app.post('/newpost', upload.single('myImage'), async (request, response) =>{
     await postData.addNewPost(request.session.userid, request.body, filename)
     response.redirect('/app')
 })
+
+app.post('/changePost', async (request, response) => {
+    const postid = request.body.postid; 
+    const updatedMessage = request.body.updatedMessage; 
+  
+    await postData.changePost(postid, updatedMessage);
+    response.redirect('/app');
+  });
+
+  app.post('/removePost', async (request, response) => {
+    try {
+      let postId = request.body.postId;
+      await removePost(postId); 
+      response.redirect('/app');
+    } catch (err) {
+      console.log('Error: ' + err);
+      response.status(500).send('Error removing post');
+    }
+  });
+
 app.post('/changeProf', upload.single('ImageFile'), async (request, response) =>{
     console.log(request.file)
     let filename=null
@@ -118,15 +138,9 @@ app.post('/changeProf', upload.single('ImageFile'), async (request, response) =>
  response.redirect('/Profile')
 })
 
-app.post('/changePost', async (request, response) => {
-    const postId = request.query.post;
-    const updatedMessage = request.body.message;
-    const fileName = request.body.fileName || null;
-  
-    await postData.changePost(postId, updatedMessage, fileName);
-  
-    response.redirect('/app');
-  });
+
+
+
 //controller for handling a post being liked
 app.post('/like', async (request, response)=>{
     //function to deal with a like button being pressed on a post
@@ -139,18 +153,13 @@ app.post('/like', async (request, response)=>{
     )
 })
 
-//controller for comment a post being liked
-app.post('/comLike', async (request, response)=>{
-    //function to deal with a like button being pressed on a post
-    likedCommentID=request.body.likedCommentID
-    commentedPostID=request.body.postid
-    await postData.likeComment(likedCommentID, commentedPostID )
-
-    response.json(
-        {posts:await postData.getPosts(500)}
-    )
-})
-
+app.post('/comLike', async (request, response) => {
+    let { likedCommentID, commentedPostID } = request.body;   
+    await postData.likeComment(likedCommentID, commentedPostID);
+    response.json({
+        posts: await postData.getPosts(500)
+    });
+});
 app.post('/comment', async (request, response)=>{
     //function to deal with a like button being pressed on a post
     let commentedPostID=request.body.postid
@@ -212,3 +221,19 @@ app.get('/Profile', checkLoggedIn, async (request, response) =>{
     });
 });
 
+
+app.post('/sendReq', async (request, response) => {
+    console.log("request sending");
+    const senderUsername = request.session.userid;
+    const receiverUsername = request.body.receiverUsername;
+    await users.sendReq(senderUsername, receiverUsername);
+    response.redirect('/app');
+});
+
+
+app.post('/acceptReq', async (request, response) => {
+    const receiverUsername = request.session.userid;
+    const senderUsername = request.body.senderUsername;
+    await users.acceptReq(receiverUsername, senderUsername);
+    response.redirect('/app');
+});

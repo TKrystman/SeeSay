@@ -30,7 +30,12 @@
  
 
     <div>
-        <ul class="posts" id="recent-posts"></ul>
+        <ul class="posts" id="recent-posts">
+            <form action="/removePost" class="page" enctype="multipart/form-data" method="POST">
+                <input type="submit" class="button" value="Update">
+              </form>
+        </ul>
+
     </div>
 
     <script src="scripts/viewposts.js"></script>

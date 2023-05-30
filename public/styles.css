@@ -145,20 +145,22 @@ body{
         width: 45%;
         margin: auto;
         padding: 10px;
-        font-size:15px; font-weight:300; color:#222; 
+        font-size: 15px;
+        font-weight: 300;
+        color: #222;
         text-transform: uppercase;
-        text-align:center;
+        text-align: center;
         list-style: none;
       
     }
     
     .list-container ul {
-      font-size:20px;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        background-color: gray;
-        color: honeydew;
+      font-size: 20px;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      background-color: gray;
+      color: honeydew;
    
     }
     
@@ -305,5 +307,10 @@ input[type="file"] {
 .post-image-thumbnail {
 
 width:400px;
+height: 300px;
+}
+
+.user-image-thumbnail{
+  width:400px;
 height: 300px;
 }

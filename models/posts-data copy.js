@@ -41,7 +41,21 @@ async function addNewPost(userID, post, imageFile) {
       await Post.create(myPost);
     } 
   
-
+    async function removePost(postid) {
+        try {
+          let data = null;
+          const mongoData = await Post.findById(postid).exec();
+          data = mongoData;
+          console.log(postid);
+          await Post.findByIdAndRemove(postid).exec();
+          console.log(data);
+          console.log(postid);
+          return data;
+        } catch (err) {
+          console.log('Error: ' + err);
+          throw err;
+        }
+      }
 
 //needs to be an async function so we can pause execution awaiting for data
 async function getPosts(n=3){
@@ -82,30 +96,11 @@ async function likePost(likedPostID, likedByUser){
     // console.log(found)
 }
 
-async function likeComment(commentedPostID, likedPostID){
-    // await Post.findByIdAndUpdate(likedPostID,{$inc: { likes: 1 }})
-    let found
-    
-    // const itemId = 2;
-    // // const query = {
-    // //    commentedPostID._id:commentedPostID,
-    // //    likedPostID._id: likedPostID
-    // //  };
-    // Post.findOne(likedPostID).then(doc => {
-    //   comments = doc.comments.id(commentedPostID );
-      
-    //  likes["0"] =  '1';
-    //   doc.save();
-    
-    //   //sent respnse to client
-    // }).catch(err => {
-    //   console.log('err')
-    // });
-
-
-    await Post.findByIdAndUpdate(likedPostID, commentedPostID,{$inc: {likes: 1}}).exec()
-        .then(foundData=>found=foundData)
-    // console.log(found)
+async function likeComment(commentedPostID, likedCommentID) {
+    await Post.updateOne(
+        { _id: commentedPostID, 'comments._id': likedCommentID },
+        { $inc: { 'comments.$.likes': 1 } }
+    ).exec();
 }
 
 async function commentOnPost(commentedPostID, commentByUser, comment){
@@ -126,12 +121,13 @@ async function commentOnPost(commentedPostID, commentByUser, comment){
         console.error(error);
       }
 }
-async function changePost(postId, updatedMessage) {
-    
-     await Post.findByIdAndUpdate(
-        postId,
-        { $set: { message: updatedMessage } }).exec();
+async function changePost(postid, updatedMessage) {
+    await Post.findByIdAndUpdate(
+      postid,
+      { message: updatedMessage }
+    ).exec();
   }
 
+ 
 
-module.exports = { addNewPost, getPosts, getPost, likePost, commentOnPost, likeComment, changePost };
+module.exports = { addNewPost, getPosts, getPost, likePost, commentOnPost, likeComment, changePost, removePost };
