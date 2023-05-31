@@ -71,7 +71,7 @@ function renderPost(post){
    
 
 }
-
+ 
 
 
 function renderImage(li, post){
@@ -96,7 +96,7 @@ function renderComments(li, comments){
             comments.forEach(function(comment){
                 let commentLi=document.createElement('li')
                 let commentLiText=document.createElement('p')
-                commentLiText.textContent=`${comment.message} (by ${comment.user}) [likes:${comment.likes}]`
+                commentLiText.textContent=`${comment.message}`
                 //add like button and code to handle like later
                 commentLi.appendChild(commentLiText)
                 commentsUL.appendChild(commentLi)

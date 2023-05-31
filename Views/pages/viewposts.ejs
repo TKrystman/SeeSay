@@ -33,6 +33,21 @@
     </div>
 
     <script src="scripts/viewposts.js"></script>
-    
+    <script>
+       var showFormButton = document.getElementById("showFormButton");
+    var myForm = document.getElementById("myForm");
+    var myForm2 = document.getElementById("myForm2");
+    showFormButton.addEventListener("click", function() {
+        if (myForm.style.display === "none") {
+        myForm.style.display = "block";
+        myForm2.style.display = "block";
+        toggleFormButton.textContent = "Hide Form";
+      } else {
+        myForm.style.display = "none";
+        myForm2.style.display = "none";
+        toggleFormButton.textContent = "Show Form";
+      }
+    });
+    </script>
 </body>
 </html>

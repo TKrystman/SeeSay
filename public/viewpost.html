@@ -141,19 +141,12 @@ let recentPostsList=document.querySelector('#recent-posts')
                         
                         let commentLi=document.createElement('ul')
                         let commentLiText=document.createElement('p')
-                        commentLiText.textContent=`${comment.message} (by ${comment.user}) [likes:${comment.likes}]`
+                        commentLiText.textContent=`${comment.message} (by ${comment.user}) [ReplyRank:${comment.likes}]`
                         //add like button and code to handle like later
                         commentLi.appendChild(commentLiText)
                         commentsUL.appendChild(commentLi)
                      
-                        let buttonc=document.createElement('button')
-            buttonc.textContent='like'
-            buttonc.addEventListener('click',commentLike)
-            //add a unique attribute for the like button so it knows which post it belongs to
-            
-            buttonc.setAttribute('data-comment-id',comment._id.toString())
-          
-            commentsUL.appendChild(buttonc)
+                      
 
                     })
                    
@@ -167,28 +160,6 @@ let recentPostsList=document.querySelector('#recent-posts')
 
 
        
-    //liking a comment  
-    function commentLike(event){
-    let likedCommentID=event.target.getAttribute('data-comment-id');
- 
-    let options={
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            likedCommentID:likedCommentID,
-            postID:selectedPost
-        })
-    }
-    fetch('/comLike',options)
-        .then(response=>response.json())
-        .then(fetchedData=>{
-            recentPosts=fetchedData.posts
-            handleServerData()
-        })
-}
-
 function handleServerData(){
     recentPostsList.innerHTML=''
     recentPosts.forEach(function(post){

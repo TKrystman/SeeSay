@@ -220,6 +220,7 @@ body{
     width: 40%;
       list-style-type: none;
       height:70%;
+      max-height: 70%;
     }
 
 .commForm label {
@@ -252,9 +253,6 @@ body{
   background-color: #ffffff;
 }
 
-input[type="file"] {
-  display: none;
-}
 
 .custom-upload-button {
   background: white;
@@ -527,3 +525,19 @@ align-content: right;
   list-style-type: none;
  }
 
+ .profdiv {
+  position: absolute;
+  left: 37%;
+  top: 40%;
+  transform: translateY(-50%);
+  border: 2px solid #ccc;
+  padding: 20px;
+  width: 300px;
+align-content: center;
+  background-color: #f9f9f9;
+}
+.profilePic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
