@@ -108,7 +108,7 @@ app.post('/newpost', upload.single('myImage'), async (request, response) =>{
     await postData.addNewPost(request.session.userid, request.body, filename)
     response.redirect('/app')
 })
-
+//change the post location
 app.post('/changePost', async (request, response) => {
     const postid = request.body.postid; 
     const updatedMessage = request.body.updatedMessage; 
@@ -116,11 +116,11 @@ app.post('/changePost', async (request, response) => {
     await postData.changePost(postid, updatedMessage);
     response.redirect('/app');
   });
-
+//remove the post 
   app.post('/removePost', async (request, response) => {
     try {
-      let postId = request.body.postId;
-      await removePost(postId); 
+      let postid = request.body.postid;
+      await postData.removePost(postid); 
       response.redirect('/app');
     } catch (err) {
       console.log('Error: ' + err);

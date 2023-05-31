@@ -21,15 +21,13 @@ const Post = model('MyPost', postSchema);
 
 
 async function addNewPost(userID, post, imageFile) {
-
-        //checks when the user last posted 
-      const lastPost = await Post.findOne({ postedBy: userID }).sort({ time: -1 }).exec();
-  //checks for if 24 hours have elapsed since last post
-      if (lastPost && Date.now() - lastPost.time < 24 * 60 * 60 * 1000) {
-        console.log("too early"); //going to change this to show the user something
-        return;
-      }
-  //if not they can post
+    let userMessage = ""; // Variable to store the user message
+  
+    const lastPost = await Post.findOne({ postedBy: userID }).sort({ time: -1 }).exec();
+    
+    if (lastPost && Date.now() - lastPost.time < 24 * 60 * 60 * 1000) {
+      userMessage = "24 Hours has not passed"; // Store the user message
+    } else {
       const myPost = {
         postedBy: userID,
         message: post.message,
@@ -39,8 +37,18 @@ async function addNewPost(userID, post, imageFile) {
       };
   
       await Post.create(myPost);
-    } 
+    }
   
+    // Display the user message
+    // You can replace this with the appropriate method to show the message to the user
+    alert(userMessage);
+  }
+
+  
+  
+  
+  
+    
     async function removePost(postid) {
         try {
           let data = null;

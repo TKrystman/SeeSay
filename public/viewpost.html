@@ -8,10 +8,15 @@
     <title>Document</title>
 
     <style>
-        #post-img {
-            width:30%;
+       
+        #myForm {
+          display: none;
+        }
+        #myForm2{
+          display: none;
         }
     </style>
+
 </head>
 <body>
     <div class="title" >
@@ -19,31 +24,40 @@
  
     </div>
 
-        <div id="post">
+        <div  class="imagediv" id="post">
         <img id="post-img" src="" alt="">
-        <p><span id="post-message"></span></p>
+        <p class="OPD">Location:  <span id="post-message"></span></p>
+
+        <button class="button-28" id="showFormButton">Edit</button>
+          <form  id="myForm"  action="/changePost" class="page"  method="POST">
+            <Text class="OPD">Update Location:</Text><br>
+            <input type="text" name="postid" placeholder="Enter Post ID" required><br> 
+            <input type="text" name="updatedMessage" class="buttonYD">
+            <input type="submit" id="bottone6" value="Update">
+          </form>
+          <form  id="myForm2" action="/removePost" class="page" method="POST">
+            <Text class="OPD">Delete Post:</Text><br>
+            <input type="text" name="postid" placeholder="Enter Post ID" required><br> 
+            <input type="submit" id="bottone6" value="Delete">
+          </form>
         </div>
+
         <form class="commForm" id="comment-form" action="/comment" method="POST">
-            <label>Comment</label>
+        
             <input type="text" id="message" name="message"><br>
-            <input type="submit" value="Post Comment">
+            <input type="submit" id="bottone5"  value="Post Comment">
         </form>
         <div class="commForm2"  id="comments">
-            <ul id="post-comments"></ul>
-        </div>
-   
-          <form action="/changePost" class="page"  method="POST">
-            <Text class="OPD">Update Location</Text><br>
-            <input type="hidden" name="postid" value="6474ddea10ab0bd629bd4f9a">
-            <input type="text" name="updatedMessage" class="button">
-            <input type="submit" class="button" value="Update">
-          </form>
+            <ul id="post-comments">
+ 
+            
 
-      <form action="/removePost" class="page" method="POST">
-  <Text class="OPD">Delete Post</Text><br>
-  <input type="text" name="postId" placeholder="Enter Post ID" required><br> 
-  <input type="submit" class="button" value="Delete">
-</form>
+            </ul>
+            
+        </div>
+
+       
+
     </div>
     
     <div class="posts">
@@ -54,7 +68,23 @@
     <div>
      <!-- <script src="scripts/viewposts.js"></script> -->
     <script>
-        
+            var showFormButton = document.getElementById("showFormButton");
+    var myForm = document.getElementById("myForm");
+    var myForm2 = document.getElementById("myForm2");
+    showFormButton.addEventListener("click", function() {
+        if (myForm.style.display === "none") {
+        myForm.style.display = "block";
+        myForm2.style.display = "block";
+        toggleFormButton.textContent = "Hide Form";
+      } else {
+        myForm.style.display = "none";
+        myForm2.style.display = "none";
+        toggleFormButton.textContent = "Show Form";
+      }
+    });
+      
+ 
+
     //    get js pointers to the html elements
        let postImage=document.querySelector('#post-img')
         let postMessage=document.querySelector('#post-message')
@@ -109,7 +139,7 @@ let recentPostsList=document.querySelector('#recent-posts')
                     comments.forEach(function(comment){
 
                         
-                        let commentLi=document.createElement('li')
+                        let commentLi=document.createElement('ul')
                         let commentLiText=document.createElement('p')
                         commentLiText.textContent=`${comment.message} (by ${comment.user}) [likes:${comment.likes}]`
                         //add like button and code to handle like later
@@ -169,7 +199,7 @@ function handleServerData(){
   
 
       
+
     </script>
-    
 </body>
 </html>
