@@ -59,7 +59,7 @@ function checkLoggedIn(request, response, nextAction){
 //controller for the main app view, depends on user logged in state
 app.get('/app', checkLoggedIn, (request, response)=>{
     //response.redirect('./register.html')
-    response.sendFile(path.resolve(__dirname,'pages/viewposts.html'))
+    response.sendFile(path.resolve(__dirname,'Views/pages/viewposts.html'))
 })
 
 //controller for logout
@@ -232,7 +232,7 @@ app.post('/register', async (request, response)=>{
 
 app.get('/Profile', checkLoggedIn, async (request, response) =>{
     var userData = await users.findUser(request.session.userid)
-     response.render('pages/Profile', {
+     response.render('pages/Profile.ejs', {
      user: userData,
     });
 });
