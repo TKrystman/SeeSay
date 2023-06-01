@@ -16,7 +16,7 @@ const postSchema = new Schema({
         likes: Number
     }]
 });
-
+var timer = false;
 const Post = model('MyPost', postSchema);
 
 
@@ -27,6 +27,7 @@ async function addNewPost(userID, post, imageFile) {
   
   if (lastPost && Date.now() - lastPost.time < 24 * 60 * 60 * 1000) {
     console.log("you have not waited 24 hours")
+  
     return;
   }
 
@@ -34,7 +35,7 @@ async function addNewPost(userID, post, imageFile) {
   const myPost = {
     postedBy: userID,
     message: post.message,
-    imagePath: imageFile,
+     imagePath: imageFile,
     likes: 0,
     time: Date.now(),
   };
@@ -50,15 +51,15 @@ async function addNewPost(userID, post, imageFile) {
     async function removePost(postid) {
         try {
           let data = null;
-          const mongoData = await Post.findById(postid).exec();
-          data = mongoData;
-          console.log(postid);
-          await Post.findByIdAndRemove(postid).exec();
+            const mongoData = await Post.findById(postid).exec();
+           data = mongoData;
+       console.log(postid);
+           await Post.findByIdAndRemove(postid).exec();
           console.log(data);
-          console.log(postid);
+            console.log(postid);
           return data;
         } catch (err) {
-          console.log('Error: ' + err);
+       console.log('Error: ' + err);
           throw err;
         }
       }
@@ -68,10 +69,10 @@ async function getPosts(n=3){
     let data=[];
     await Post.find({})
         .sort({'time': -1})
-        .limit(n)
-        .exec()
+          .limit(n)
+          .exec()
         .then(mongoData=>{
-            data=mongoData;
+             data=mongoData;
         })
         .catch(err=>{
             console.log('Error:'+err)
@@ -86,7 +87,7 @@ async function getPost(postid){
         .then(mongoData=>{
             data=mongoData;
         })
-        .catch(err=>{
+         .catch(err=>{
             console.log('Error:'+err)
         });
     return data;
@@ -97,13 +98,13 @@ async function likePost(likedPostID, likedByUser){
     let found
 
     
-    await Post.findByIdAndUpdate(likedPostID,{$inc: {likes: 1}}).exec()
+     await Post.findByIdAndUpdate(likedPostID,{$inc: {likes: 1}}).exec()
         .then(foundData=>found=foundData)
     // console.log(found)
 }
 
 async function likeComment(commentedPostID, likedCommentID) {
-    await Post.updateOne(
+     await Post.updateOne(
         { _id: commentedPostID, 'comments._id': likedCommentID },
         { $inc: { 'comments.$.likes': 1 } }
     ).exec();
@@ -113,9 +114,9 @@ async function commentOnPost(commentedPostID, commentByUser, comment){
   const randomNumber = Math.floor(Math.random() * 1000) + 1;
     // await Post.findByIdAndUpdate(likedPostID,{$inc: { likes: 1 }})
     let found
-    let newComment={
+      let newComment={
         user: commentByUser,
-        message: comment,
+         message: comment,
         likes: randomNumber,
     }
     try { //means program will still run if any errors occur
@@ -128,7 +129,7 @@ async function commentOnPost(commentedPostID, commentByUser, comment){
       }
 }
 async function changePost(postid, updatedMessage) {
-    await Post.findByIdAndUpdate(
+      await Post.findByIdAndUpdate(
       postid,
       { message: updatedMessage }
     ).exec();

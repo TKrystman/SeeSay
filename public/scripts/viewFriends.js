@@ -14,6 +14,7 @@ function handleServerData(){
     UsersList.innerHTML=''
     allUsers.forEach(function(user){
         let li=renderPost(user)
+        li.classList.add('list-item');
         UsersList.appendChild(li)
     })
 }

@@ -110,10 +110,10 @@ app.post('/newpost', upload.single('myImage'), async (request, response) =>{
 })
 //change the post location
 app.post('/changePost', async (request, response) => {
-    const postid = request.body.postid;
+      const postid = request.body.postid;
     const updatedMessage = request.body.updatedMessage;
-    const loggedInUser = request.session.userid;
-    const post = await postData.getPost(postid);
+     const loggedInUser = request.session.userid;
+      const post = await postData.getPost(postid);
     if (post && post.postedBy === loggedInUser) {
       const user = await users.findUser(post.postedBy);
       if (user) {
@@ -124,8 +124,8 @@ app.post('/changePost', async (request, response) => {
   });
 //remove the post 
 app.post('/removePost', async (request, response) => {
-    const postid = request.body.postid;
-    const loggedInUser = request.session.userid;
+     const postid = request.body.postid;
+      const loggedInUser = request.session.userid;
     const post = await postData.getPost(postid);
   
     if (post && post.postedBy === loggedInUser) {
@@ -133,11 +133,11 @@ app.post('/removePost', async (request, response) => {
       if (user) {
         try {
           await postData.removePost(postid);
-          response.redirect('/app');
+            response.redirect('/app');
         } catch (err) {
-          console.log('Error: ' + err);
+            console.log('Error: ' + err);
           response.status(500).send('Error removing post');
-        }
+         }
       }
     } else {
       response.redirect('/app');
@@ -146,7 +146,7 @@ app.post('/removePost', async (request, response) => {
 
 app.post('/changeProf', upload.single('ImageFile'), async (request, response) =>{
     console.log(request.file)
-    let filename=null
+     let filename=null
     if(request.file && request.file.filename){ //check that a file was passes with a valid name
         filename='uploads/'+request.file.filename
     }
@@ -161,8 +161,8 @@ app.post('/changeProf', upload.single('ImageFile'), async (request, response) =>
 app.post('/like', async (request, response)=>{
     //function to deal with a like button being pressed on a post
     likedPostID=request.body.likedPostID
-    likedByUser=request.session.userid
-    await postData.likePost(likedPostID, likedByUser)
+      likedByUser=request.session.userid
+     await postData.likePost(likedPostID, likedByUser)
     // console.log(likedByUser+" liked "+likedPostID)
     response.json(
         {posts:await postData.getPosts(500)}
@@ -232,24 +232,24 @@ app.post('/register', async (request, response)=>{
 
 app.get('/Profile', checkLoggedIn, async (request, response) =>{
     var userData = await users.findUser(request.session.userid)
-    response.render('pages/Profile', {
+     response.render('pages/Profile', {
      user: userData,
     });
 });
 
 
 app.post('/sendReq', async (request, response) => {
-    console.log("request sending");
+     console.log("request sending");
     const senderUsername = request.session.userid;
     const receiverUsername = request.body.receiverUsername;
-    await users.sendReq(senderUsername, receiverUsername);
+      await users.sendReq(senderUsername, receiverUsername);
     response.redirect('/app');
 });
 
 
 app.post('/acceptReq', async (request, response) => {
     const receiverUsername = request.session.userid;
-    const senderUsername = request.body.senderUsername;
+      const senderUsername = request.body.senderUsername;
     await users.acceptReq(receiverUsername, senderUsername);
     response.redirect('/app');
 });

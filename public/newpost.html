@@ -13,14 +13,13 @@
         <div class="header">
         <h2 class="seven">Upload</h2> 
     </div>
-    <form action="/newpost" class="page" enctype="multipart/form-data" method="POST">
+    <form action="/newpost" class="profdiv" enctype="multipart/form-data" method="POST">
        
-        <label class="custom-upload-button" for="myImage">Upload Image</label>
+        <label class="OPD" for="myImage">Upload Image</label>
         <input type="file" name="myImage" accept="image/*" id="myImage" />
-        <Text> Where was this taken? </Text>
-        <input type="text" id="message" name="message"><br>
-       
-        <button type="submit" value="Post" class="button-86" role="button">
+        <Text class="OPD"> Where was this taken? </Text>
+        <input  class="OPD" type="text" id="message" name="message"><br>
+        <button  id="start-button" type="submit" value="Post" class="button-28" role="button">
             Post
          </button>
     </form>
@@ -46,6 +45,20 @@
     </div>
 </section>
   
-  
+  <script src="../models/posts-data copy.js"></script>
+
+<script>
+  const button = document.querySelector("#start-button");
+        button.addEventListener("click", handleWaitButtonClick);
+
+        // Function to handle the button click
+        function handleWaitButtonClick() {
+            timer = true;
+            if (timer == true) {
+                // Display the alert message
+                alert("Remember if your post does not send, you must wait 24 hours since last confimed post.");
+            }
+        }
+  </script>
 </body>
 </html>
