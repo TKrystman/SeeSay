@@ -110,21 +110,37 @@ app.post('/newpost', upload.single('myImage'), async (request, response) =>{
 })
 //change the post location
 app.post('/changePost', async (request, response) => {
-    const postid = request.body.postid; 
-    const updatedMessage = request.body.updatedMessage; 
-  
-    await postData.changePost(postid, updatedMessage);
+    const postid = request.body.postid;
+    const updatedMessage = request.body.updatedMessage;
+    const loggedInUser = request.session.userid;
+    const post = await postData.getPost(postid);
+    if (post && post.postedBy === loggedInUser) {
+      const user = await users.findUser(post.postedBy);
+      if (user) {
+        await postData.changePost(postid, updatedMessage);
+      }
+    }
     response.redirect('/app');
   });
 //remove the post 
-  app.post('/removePost', async (request, response) => {
-    try {
-      let postid = request.body.postid;
-      await postData.removePost(postid); 
+app.post('/removePost', async (request, response) => {
+    const postid = request.body.postid;
+    const loggedInUser = request.session.userid;
+    const post = await postData.getPost(postid);
+  
+    if (post && post.postedBy === loggedInUser) {
+      const user = await users.findUser(post.postedBy);
+      if (user) {
+        try {
+          await postData.removePost(postid);
+          response.redirect('/app');
+        } catch (err) {
+          console.log('Error: ' + err);
+          response.status(500).send('Error removing post');
+        }
+      }
+    } else {
       response.redirect('/app');
-    } catch (err) {
-      console.log('Error: ' + err);
-      response.status(500).send('Error removing post');
     }
   });
 

@@ -17,9 +17,9 @@
    <div class="profdiv">
    
 <img class="profilePic" src="<%= user.profilePic %>">  
-        <h2> <%= user.username %> </h2>
-        <h2 class="BIO"> <%= user.bio %> </h2>
-          <button class="button-28"> <a style="text-decoration: none;" href="friendsList.html">Friends</a></button> 
+        <h2 id="BIOtxt" > <%= user.username %> </h2>
+        <h2 id="BIOtxt2" class="BIO"> <%= user.bio %> </h2>
+          <button class="button-29"> <a style="text-decoration: none;" href="friendsList.html">Friends</a></button> 
 <button class="button-28" id="showFormButton">Edit</button>
         <form  id="myForm"  action="/changeProf" class="myform" enctype="multipart/form-data" method="POST">
 <Text class="OPD"> Update Profile Pic </Text>

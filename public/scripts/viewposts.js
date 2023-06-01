@@ -29,6 +29,7 @@ function renderPost(post){
     console.log(comments);
     comments.sort(function(a,b){return b.likes-a.likes});
     console.log(comments);
+    liText.classList.add('textContent');
     if(comments.length > 0){
 
         renderComments(li, [comments[0]]) //only render first comment
@@ -36,12 +37,13 @@ function renderPost(post){
     }
 
     img.src = "../Images/Thumbsup.png"; 
-    liText.textContent = ` (${post.postedBy})  Likes: [${post.likes}]`;
+    liText.textContent = `|${post.postedBy} |  Likes:${post.likes}|`;
  
     li.appendChild(liText);
 
     //create a 'like' button
     let button=document.createElement('button')
+    button.classList.add('custom-button');
     button.textContent='like'
     button.addEventListener('click',processLike)
     //add a unique attribute for the like button so it knows which post it belongs to
@@ -49,6 +51,7 @@ function renderPost(post){
  
     //create a 'view and comment' button
     let viewButton=document.createElement('button')
+    viewButton.classList.add('custom-button', 'custom-view-button');
     viewButton.textContent='view and comment'
     viewButton.addEventListener('click',processView)
     //add a unique attribute for the like button so it knows which post it belongs to

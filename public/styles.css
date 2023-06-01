@@ -1,51 +1,41 @@
-
-body{
-  
-  
-  background-color: 	#f5f1eb;
-  justify-content: flex-start; 
+body {
+  background-color: #f5f1eb;
+  justify-content: flex-start;
 }
-.layout {
-  
-  
-    display: grid;
-    grid:
-      "header" auto
-      "main" 1fr
-      "footer" auto
-      / 1fr;
-    gap: 8px;
-  }
-  
-  .header { grid-area: header; }
-  .main { grid-area: main; }
-  .footer { grid-area: footer; }
 
-  .seven{
-    text-align: center;
-        font-size:30px; font-weight:300; color:#222; letter-spacing:1px;
-        text-transform: uppercase;
-   
-        display: grid;
-        grid-template-columns: 1fr max-content 1fr;
-        grid-template-rows: 27px 0;
-        grid-gap: 20px;
-        align-items: center;
-    }
+.header {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 200;
+  color: #222;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'Dosis', sans-serif;
+  
+}
+
+.seven:after, .seven:before {
+  content: " ";
+  display: block;
+  border-bottom: 1px solid #222;
+  border-top: 1px solid #222;
+  height: 5px;
+  background-color: #f5f1eb;
+}
     
     .seven:after,.seven:before {
         content: " ";
         display: block;
-        border-bottom: 1px solid #c50000;
-        border-top: 1px solid #c50000;
+        border-bottom: 1px solid #222;
+        border-top: 1px solid #222;
         height: 5px;
-      background-color:#f8f8f8;
+        background-color: #f5f1eb;
     }
 
     .seven2{
       top:90%;
       text-align: center;
-          font-size:20px; font-weight:300; color:#222; letter-spacing:1px;
+          font-size:20px; font-weight:200; color:#222; letter-spacing:1px;
           text-transform: uppercase;
           position: fixed;
           bottom: 0;
@@ -61,10 +51,10 @@ body{
       .seven2:after,.seven:before {
           content: " ";
           display: block;
-          border-bottom: 1px solid #c50000;
-          border-top: 1px solid #c50000;
+          border-bottom: 1px solid #222;
+          border-top: 1px solid #222;
           height: 5px;
-        background-color:#f8f8f8;
+          background-color: #f5f1eb;
         text-align: center;
       }
 
@@ -103,6 +93,7 @@ body{
         text-transform: uppercase;
         text-align:center;
         list-style: none;
+   
       }
       .page{
         text-align:left;
@@ -128,7 +119,7 @@ body{
         overflow: hidden;
         
     
-     
+        z-index: 2;
  
 
       }
@@ -141,6 +132,7 @@ body{
         align-items: center;
         justify-content: center;
         
+        font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 900; line-height: 26.4px;
 
         display: block;
      
@@ -164,17 +156,27 @@ body{
       
 
       .list-container {
-    
-        width: 45%;
-        margin: auto;
+        width: 80%;
+        margin: 0 auto;
         padding: 10px;
         font-size: 15px;
         font-weight: 300;
         color: #222;
         text-transform: uppercase;
+        
         text-align: center;
         list-style: none;
-      
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
+    }
+    
+    .list-container li {
+        margin-bottom: 50px;
+        border: 2px solid #222;
+
+        
+   
     }
     
     .list-container ul {
@@ -182,16 +184,11 @@ body{
       list-style-type: none;
       margin: 0;
       padding: 0;
-      background-color: gray;
+      background-color: #222;
       color: honeydew;
-   
     }
     
-    .list-container li {
- 
-      margin-bottom: 50px;
-        border: 4px solid gray;
-    }
+   
     .title{
       text-align: center;
     }
@@ -336,9 +333,12 @@ body{
   transform: translate(0, 5%);
 }
 .post-image-thumbnail {
-
-width:400px;
+  border: solid 1px black;
+width:300px;
 height: 300px;
+top:18px;
+position: relative;
+
 }
 
 .user-image-thumbnail{
@@ -407,6 +407,8 @@ align-content: right;
   touch-action: manipulation;
   width: 100%;
   will-change: transform;
+ 
+
 }
 
 .button-28:disabled {
@@ -421,6 +423,51 @@ align-content: right;
 }
 
 .button-28:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+.button-29 {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  will-change: transform;
+  border-bottom: 1px;
+
+}
+
+.button-29:disabled {
+  pointer-events: none;
+}
+
+.button-29:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button-29:active {
   box-shadow: none;
   transform: translateY(0);
 }
@@ -528,16 +575,105 @@ align-content: right;
  .profdiv {
   position: absolute;
   left: 37%;
-  top: 40%;
+  top: 50%;
   transform: translateY(-50%);
   border: 2px solid #ccc;
   padding: 20px;
   width: 300px;
 align-content: center;
-  background-color: #f9f9f9;
+  background-color: #e6e6e6;
+  border: solid 1px black;
 }
 .profilePic {
   width: 150px;
   height: 150px;
   border-radius: 50%;
+  left:25%;
+  position: relative;
+  border: solid 2px black;
+}
+
+.textContent {
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 900; line-height: 26.4px;
+  
+}
+.custom-button {
+  display: inline-block;
+  background-color: #2c2c2c;
+  padding: 20px;
+  width: 12%;
+  color: #ffffff;
+
+  border: 4px double #cccccc;
+  border-radius: 10px;
+  height:9%;
+  font-size: 12px;
+  cursor: pointer;
+  margin: 10px;
+  -webkit-transition: all 0.5s; 
+  -moz-transition: all 0.5s; 
+  -o-transition: all 0.5s; 
+  transition: all 0.5s; 
+  text-align: center;
+}
+.custom-button:hover {
+  background-color: rgb(128, 0, 0);
+}
+
+.custom-view-button {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 93%;
+  will-change: transform;
+  position: relative;
+  position: bottom;
+  bottom: 7px;
+}
+
+.custom-view-button:disabled {
+  pointer-events: none;
+}
+
+.custom-view-button:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(1px);
+}
+
+.custom-view-button:active {
+  box-shadow: none;
+  transform: translateY(-1);
+
+}
+#BIOtxt{
+  position: relative;
+left: 40%;
+}
+#BIOtxt2{
+  position: relative;
+  border: 1px solid #1A1A1A;
+  font-size: 15px;
+  background-color: rgb(255, 255, 255);
 }
