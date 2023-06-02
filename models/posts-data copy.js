@@ -24,7 +24,7 @@ async function addNewPost(userID, post, imageFile) {
   // checks when the user last posted
   const lastPost = await Post.findOne({ postedBy: userID }).sort({ time: -1 }).exec();
   
-  
+  //checks for if 24 hours have elapsed since last post
   if (lastPost && Date.now() - lastPost.time < 24 * 60 * 60 * 1000) {
     console.log("you have not waited 24 hours")
   
