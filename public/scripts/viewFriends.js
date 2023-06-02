@@ -1,7 +1,7 @@
 let allUsers=[]
 
 let UsersList=document.querySelector('#view-friends')
-
+//get the user array
 fetch('/getUsers')
     .then(response=>response.json())
     .then(fetchedData=>{
@@ -28,32 +28,32 @@ function renderPost(user){
     
     
 
-    img.src = "../Images/Thumbsup.png"; 
+    //img.src = "../Images/Thumbsup.png"; 
     liText.textContent = `${user.username}`;
  
     li.appendChild(liText);
 
     //create a 'like' button
   
-    //create a 'view and comment' button
+    //create a 'send request' button
     let viewButton = document.createElement('button');
     viewButton.textContent = 'Send Request';
     viewButton.classList.add('view-friends-button');
     
-    // Set the data attribute with the user ID
+   
     viewButton.setAttribute('data-user-id', user.username.toString());
     
     viewButton.addEventListener('click', (event) => {
-        processView(event, user.username.toString()); // Pass the user ID as an argument
+        processView(event, user.username.toString()); 
     });
-    // show image if present
+    
     renderImage(li, user)
     
     li.appendChild(liText)
     
     li.appendChild(viewButton)
-    // grab the username list
-   
+
+   //when outputting output as a list
         return li;
       
 
@@ -62,12 +62,13 @@ function renderPost(user){
 }
 
 
-
+//render their profile picrture
 function renderImage(li, user){
     if(user.profilePic){
         let postImage=document.createElement('img')
         postImage.src=user.profilePic
         postImage.alt="temporary alt tag"
+        //for css purposes
         postImage.classList.add("user-image-thumbnail")
         li.appendChild(postImage)
     } else {
@@ -79,12 +80,13 @@ function renderImage(li, user){
 
 
 function processView(event, user){
+    //its working
     console.log('yes');
 
    
    
 
-  
+  //user to request
     console.log(user);
     const options = {
         method: 'POST',
@@ -95,7 +97,7 @@ function processView(event, user){
             receiverUserId: user
         })
     };
-
+//send the request
     fetch('/sendReq', options)
         .then(response => response.json())
         .then(fetchedData => {

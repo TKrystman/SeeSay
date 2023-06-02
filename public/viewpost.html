@@ -68,10 +68,12 @@
     <div>
      <!-- <script src="scripts/viewposts.js"></script> -->
     <script>
+        //for post editing hide the forms unless user clicks them
             var showFormButton = document.getElementById("showFormButton");
     var myForm = document.getElementById("myForm");
     var myForm2 = document.getElementById("myForm2");
     showFormButton.addEventListener("click", function() {
+        //toggle on and off
         if (myForm.style.display === "none") {
         myForm.style.display = "block";
         myForm2.style.display = "block";
@@ -133,6 +135,7 @@ let recentPostsList=document.querySelector('#recent-posts')
                   
                     //add a list of comments
                     let commentsUL=document.createElement('ul')
+                    //sorts comments from most liked first
                     console.log(comments);
                     comments.sort(function(a,b){return b.likes-a.likes});
                     console.log(comments);

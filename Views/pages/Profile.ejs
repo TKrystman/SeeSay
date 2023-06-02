@@ -6,6 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+     <style>
+       
+        #myForm {
+          display: none;
+        }
+        #myForm2{
+          display: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -21,19 +30,23 @@
         <h2 id="BIOtxt2" class="BIO"> <%= user.bio %> </h2>
           <button class="button-29"> <a style="text-decoration: none;" href="friendsList.html">Friends</a></button> 
 <button class="button-28" id="showFormButton">Edit</button>
+
         <form  id="myForm"  action="/changeProf" class="myform" enctype="multipart/form-data" method="POST">
 <Text class="OPD"> Update Profile Pic </Text>
       <input type="file" name="ImageFile" accept="image/*" />
     
       <input type="text" id="Bio" name="Bio"> <Text class="OPD"> Update Bio </Text><br>
-       <input type="text" id="password" name="password"> <Text class="OPD"> Change Password </Text><br>
-      <input type="submit" class="button" value="Update">
-     
+      
+     <input type="submit" class="button" value="Update">
     
     </form>
 
-    
+        
 
+            <form  id="myForm2"  action="/changePass" class="myform2" enctype="multipart/form-data" method="POST">
+  <input type="text" id="password" name="password"> <Text class="OPD"> Change Password </Text><br>
+     <input type="submit" class="button" value="Update">
+</form>
  
 
    </div>
@@ -60,13 +73,13 @@
       
         <script src="scripts/viewposts.js"></script>
          <script>
-       var showFormButton = document.getElementById("showFormButton");
+               var showFormButton = document.getElementById("showFormButton");
     var myForm = document.getElementById("myForm");
-  
+    var myForm2 = document.getElementById("myForm2");
     showFormButton.addEventListener("click", function() {
         if (myForm.style.display === "none") {
         myForm.style.display = "block";
-   
+        myForm2.style.display = "block";
         toggleFormButton.textContent = "Hide Form";
       } else {
         myForm.style.display = "none";
@@ -74,6 +87,8 @@
         toggleFormButton.textContent = "Show Form";
       }
     });
+      
+ 
     </script>
 </section>
 </body>

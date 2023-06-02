@@ -3,9 +3,7 @@ const app = express()
 app.listen(3000, ()=> console.log('listening at port 3000'))
 const mongoose=require('mongoose');
 const multer=require('multer');
-//serve unspecified static pages from our public dir
 app.use(express.static('public'))
-//make express middleware for json available
 app.use(express.json())
 
 require('dotenv').config();
@@ -31,14 +29,13 @@ const cookieParser = require("cookie-parser");
 
 const postData=require('./models/posts-data copy')
 
-//make cookie parser middleware available
 app.use(cookieParser());
 
-//load sessions middleware, with some config
+
 app.use(sessions({
     secret: "a secret that only i know",
     saveUninitialized:true,
-    cookie: { maxAge: threeMins },
+    cookie: { maxAge: oneHour },
     resave: false 
 }));
 
@@ -102,7 +99,7 @@ app.get('/newpostpage', checkLoggedIn, (request, response)=>{
 app.post('/newpost', upload.single('myImage'), async (request, response) =>{
     console.log(request.file)
     let filename=null
-    if(request.file && request.file.filename){ //check that a file was passes with a valid name
+    if(request.file && request.file.filename){ 
         filename='uploads/'+request.file.filename
     }
     await postData.addNewPost(request.session.userid, request.body, filename)
@@ -114,6 +111,7 @@ app.post('/changePost', async (request, response) => {
     const updatedMessage = request.body.updatedMessage;
      const loggedInUser = request.session.userid;
       const post = await postData.getPost(postid);
+        //check that the user logged in has posted the post.
     if (post && post.postedBy === loggedInUser) {
       const user = await users.findUser(post.postedBy);
       if (user) {
@@ -127,7 +125,7 @@ app.post('/removePost', async (request, response) => {
      const postid = request.body.postid;
       const loggedInUser = request.session.userid;
     const post = await postData.getPost(postid);
-  
+  //check that the user logged in has posted the post.
     if (post && post.postedBy === loggedInUser) {
       const user = await users.findUser(post.postedBy);
       if (user) {
@@ -144,16 +142,30 @@ app.post('/removePost', async (request, response) => {
     }
   });
 
+
+
 app.post('/changeProf', upload.single('ImageFile'), async (request, response) =>{
+    //this take the image file and the bio and checks correct names then handles data
     console.log(request.file)
-     let filename=null
-    if(request.file && request.file.filename){ //check that a file was passes with a valid name
+    let filename=null
+    if(request.file && request.file.filename){  //make sure the file name is correct
         filename='uploads/'+request.file.filename
     }
     await users.changeProfile(request.session.userid, request.body, filename)
  response.redirect('/Profile')
 })
 
+
+app.post('/changePass', upload.single('ImageFile'), async (request, response) =>{
+        //handle the data for the mongo password chage
+    console.log(request.file)
+    let filename=null
+    if(request.file && request.file.filename){  //make sure the file name is correct
+        filename='uploads/'+request.file.filename
+    }
+    await users.changePass(request.session.userid, request.body, filename)
+ response.redirect('/Profile')
+})
 
 
 
@@ -237,6 +249,10 @@ app.get('/Profile', checkLoggedIn, async (request, response) =>{
     });
 });
 
+
+
+// these are for grabbing the friends from the friends pages and then grabbing the functions
+//from the user.js and handliung request and friend data.
 
 app.post('/sendReq', async (request, response) => {
      console.log("request sending");

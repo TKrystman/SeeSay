@@ -85,22 +85,34 @@ const User = model('User', userSchema);
         }
         return false
     }
+
+    //for updating BIO and profile pic
     async function changeProfile(user, data, ImageFile){
 
+      
         console.log(ImageFile);
 
+      
+//update profile pic
+        await User.findOneAndUpdate(
+            {username: user}, 
+            {profilePic: ImageFile},
+            
+        ).
+        exec()
+        //update bio
         await User.findOneAndUpdate(
              {username: user}, 
              {bio: data.Bio},
             ).exec()
 
-            await User.findOneAndUpdate(
-                {username: user}, 
-                {profilePic: ImageFile},
-                
-            ).
-            exec()
+           
 
+     }
+     //Change the password
+     async function changePass(user, data){
+
+//same way as the bio but using the password element of the user instead
             await User.findOneAndUpdate(
                 {username: user}, 
                 {password: data.password},
@@ -108,9 +120,10 @@ const User = model('User', userSchema);
             ).exec()
 
      }
+     //send request by getting user id and one you want to request
      async function sendReq(senderUsername, receiverUserId) {
     const sender = await findUser(senderUsername);
-    const receiver = await User.findById(receiverUserId); // Find the receiver by user ID
+    const receiver = await User.findById(receiverUserId); 
     console.log(senderUsername, receiverUserId);
     if (sender && receiver) {
         receiver.requests.push({ user: senderUsername });
@@ -120,10 +133,11 @@ const User = model('User', userSchema);
 }
     
     async function acceptReq(receiverUsername, senderUsername) {
+      
         const receiver = await findUser(receiverUsername);
         const sender = await findUser(senderUsername);
         if (receiver && sender) {
-          
+          //for when both users are friens push both onto friends list
             receiver.requests = receiver.requests.filter(request => request.user !== senderUsername);
     
        
@@ -131,7 +145,7 @@ const User = model('User', userSchema);
     
           
             sender.friends.push({ user: receiverUsername });
-    
+    //save 
             await receiver.save();
             await sender.save();
         }
@@ -148,4 +162,5 @@ const User = model('User', userSchema);
         changeProfile,
         sendReq,
         acceptReq,
+        changePass,
     }

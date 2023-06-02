@@ -47,13 +47,16 @@ async function addNewPost(userID, post, imageFile) {
   
   
   
-    
+    //Remove the post
     async function removePost(postid) {
         try {
           let data = null;
+          //Get the post from postID
             const mongoData = await Post.findById(postid).exec();
            data = mongoData;
+           //To tell me if it has got the post
        console.log(postid);
+          //remove from posts
            await Post.findByIdAndRemove(postid).exec();
           console.log(data);
             console.log(postid);
@@ -64,7 +67,6 @@ async function addNewPost(userID, post, imageFile) {
         }
       }
 
-//needs to be an async function so we can pause execution awaiting for data
 async function getPosts(n=3){
     let data=[];
     await Post.find({})
@@ -111,25 +113,29 @@ async function likeComment(commentedPostID, likedCommentID) {
 }
 
 async function commentOnPost(commentedPostID, commentByUser, comment){
+  //Random number generator for the ReplyRank
   const randomNumber = Math.floor(Math.random() * 1000) + 1;
-    // await Post.findByIdAndUpdate(likedPostID,{$inc: { likes: 1 }})
+  
+    // OLD IDEA --> await Post.findByIdAndUpdate(likedPostID,{$inc: { likes: 1 }})
     let found
       let newComment={
         user: commentByUser,
          message: comment,
         likes: randomNumber,
     }
-    try { //means program will still run if any errors occur
+    try { //Add comment to comment array through finding the postID.
         await Post.findByIdAndUpdate(commentedPostID, { $push: { comments: newComment } }).exec();
       
-        // console.log(found);
+       
       } catch (error) {
-        // Handle any errors that occurred during the process
+      
         console.error(error);
       }
 }
+//simple fucntion finds post and changes message
 async function changePost(postid, updatedMessage) {
       await Post.findByIdAndUpdate(
+        //user inputs postID
       postid,
       { message: updatedMessage }
     ).exec();

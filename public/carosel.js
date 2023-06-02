@@ -10,7 +10,7 @@ function plusSlides(n) {
 function currentSlide(n) {
   showSlides(slideIndex = n);
 }
-
+//switch slides using for loop
 function showSlides(n) {
   let i;
   let slides = document.getElementsByClassName("mySlides");
